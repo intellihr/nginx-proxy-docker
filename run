@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+export REPLACE_VARS='$PORT:$APP_SERVER'
+
+envsubst "$REPLACE_VARS" < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+
+exec nginx -g 'daemon off;'
