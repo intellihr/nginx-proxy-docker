@@ -15,7 +15,7 @@ services:
       - "80:80"
     environment:
       - PORT=80
-      - APP_SERVER app:5000
+      - APP_SERVER=http://app:5000
     links:
       - web:app
     restart: always
