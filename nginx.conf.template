@@ -10,9 +10,9 @@ http {
   gzip_min_length 1000;
 
   map "$request_uri,$http_user_agent" $log_ua {
-    "/health_check,ELB-HealthChecker/2.0" 1;
-    "/health_check,ELB-HealthChecker/1.0" 1;
-    "~/health_check,Amazon Route 53 Health Check Service.*" 1;
+    "~/health.*check,ELB-HealthChecker/2.0" 1;
+    "~/health.*check,ELB-HealthChecker/1.0" 1;
+    "~/health.*check,Amazon Route 53 Health Check Service.*" 1;
     default 0;
   }
 
