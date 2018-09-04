@@ -9,6 +9,13 @@ http {
   gzip_types application/json;
   gzip_min_length 1000;
 
+  map "$request_uri,$http_user_agent" $log_ua {
+    "/health_check,ELB-HealthChecker/2.0" 1;
+    "/health_check,ELB-HealthChecker/1.0" 1;
+    "~/health_check,Amazon Route 53 Health Check Service.*" 1;
+    default 0;
+  }
+
   server {
     listen $PORT;
 
@@ -16,6 +23,10 @@ http {
       # Reject requests with unsupported HTTP method
       if ($request_method !~ ^(GET|POST|HEAD|OPTIONS|PUT|DELETE)$) {
         return 405;
+      }
+
+      if ($log_ua = 1) {
+        access_log off;
       }
 
       # Only requests matching the whitelist expectations will
