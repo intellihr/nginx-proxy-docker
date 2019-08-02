@@ -26,7 +26,7 @@ http {
 
     location / {
       # Reject requests with unsupported HTTP method
-      if ($request_method !~ ^(GET|POST|HEAD|OPTIONS|PUT|DELETE)$) {
+      if ($request_method !~ ^(DELETE|GET|HEAD|OPTIONS|PATCH|POST|PUT)$) {
         return 405;
       }
 
