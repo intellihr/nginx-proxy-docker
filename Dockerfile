@@ -1,4 +1,4 @@
-FROM nginx:1.15-alpine
+FROM nginx:1.17.3-alpine
 
 LABEL maintainer="soloman.weng@intellihr.com.au"
 ENV REFRESH_AT=2018.12.27
