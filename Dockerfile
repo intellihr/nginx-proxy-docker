@@ -1,7 +1,7 @@
-FROM nginx:1.15-alpine
+FROM nginx:1.16.0-alpine
 
 LABEL maintainer="soloman.weng@intellihr.com.au"
-ENV REFRESH_AT=2018.12.27
+ENV REFRESH_AT=2019.08.02
 
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 COPY run /root/run
