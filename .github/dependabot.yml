@@ -1,0 +1,27 @@
+version: 2
+registries:
+  git-github-com:
+    type: git
+    url: https://github.com
+    username: intellihrci
+    password: "${{secrets.GIT_GITHUB_COM_PASSWORD}}"
+
+updates:
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "07:00"
+    timezone: Australia/Brisbane
+  ignore:
+  - dependency-name: nginx
+    versions:
+    - ">= 1.17.a, < 1.18"
+  - dependency-name: nginx
+    versions:
+    - 1.19.6.pre.alpine
+    - 1.19.7.pre.alpine
+    - 1.19.8.pre.alpine
+    - 1.19.9.pre.alpine
+  registries:
+  - git-github-com
