@@ -8,7 +8,8 @@ http {
   gzip_proxied any;
   gzip_types application/json;
   gzip_min_length 1000;
-
+  merge_slashes on;
+  
   map "$request_uri,$http_user_agent" $log_ua {
     "~/health.*check,ELB-HealthChecker/2.0" 1;
     "~/health.*check,ELB-HealthChecker/1.0" 1;
@@ -25,9 +26,6 @@ http {
     $HSTS
 
     location / {
-      # Normalize multiple slashes in the path so upstream apps never receive `//...`.
-      # Preserve query string when proxying.
-      merge_slashes on;
       rewrite ^//+(.*)$ /$1 break;
 
       # Reject requests with unsupported HTTP method
