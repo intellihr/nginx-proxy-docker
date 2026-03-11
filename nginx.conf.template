@@ -25,6 +25,11 @@ http {
     $HSTS
 
     location / {
+      # Normalize multiple slashes in the path so upstream apps never receive `//...`.
+      # Preserve query string when proxying.
+      merge_slashes on;
+      rewrite ^//+(.*)$ /$1 break;
+
       # Reject requests with unsupported HTTP method
       if ($request_method !~ ^(DELETE|GET|HEAD|OPTIONS|PATCH|POST|PUT)$) {
         return 405;
@@ -36,7 +41,7 @@ http {
 
       # Only requests matching the whitelist expectations will
       # get sent to the application server
-      proxy_pass $APP_SERVER;
+      proxy_pass $APP_SERVER$uri$is_args$args;
       proxy_http_version 1.1;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection 'upgrade';
